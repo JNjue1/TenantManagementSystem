@@ -1,16 +1,22 @@
 package com.example.tenantmanagementsystem.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
-// ": Serializable" means "a Tenant can be packed up and sent
-// to another screen". Safe Args needs this in Practical 3
+// @Entity: every Tenant is stored as one ROW in the "tenants" table
+@Entity(tableName = "tenants")
 data class Tenant(
+    // Each property becomes a COLUMN
     val name: String,
     val phone: String,
-    val rent: String
-) : Serializable {
+    val rent: String,
 
-    // Unchanged: the text shown by @{tenant.summary()}
+    // A unique number for each row, Room fills it in (1, 2, 3...).
+    // "= 0" means "not saved yet" and keeps Tenant(name, phone, rent) working
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0
+) : Serializable {
     fun summary(): String {
         return "Tenant: $name\nPhone: $phone\nRent: KSh $rent"
     }
