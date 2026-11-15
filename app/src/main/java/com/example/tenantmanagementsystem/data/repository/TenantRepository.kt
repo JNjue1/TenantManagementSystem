@@ -9,6 +9,7 @@ import com.example.tenantmanagementsystem.data.model.Tenant
 class TenantRepository(private val tenantDao: TenantDao) {
 
     // All tenants, kept up to date by Room
+    // Automatically streams an updated list of tenants from the local Room database
     val tenants: LiveData<List<Tenant>> = tenantDao.getAllTenants()
 
     // suspend: must be called from a coroutine

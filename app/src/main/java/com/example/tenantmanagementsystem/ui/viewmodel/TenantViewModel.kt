@@ -1,4 +1,6 @@
 package com.example.tenantmanagementsystem.ui.viewmodel
+//ViewModel for managing tenant data across the UI
+//Necessary to initialize the Room database instance without causing memory leaks
 
 import android.app.Application
 import android.util.Log
@@ -18,6 +20,7 @@ class TenantViewModel(application: Application) : AndroidViewModel(application) 
     private val repository = TenantRepository(TenantDatabase.getDatabase(application).tenantDao())
 
     // --- 1. THE DATA: Room's LiveData, updated whenever the table changes ---
+    // Automatically observed for changes, keeping the UI synchronized with the local database.
     val tenants: LiveData<List<Tenant>> = repository.tenants
 
     // --- 2. TRANSFORMATIONS ---
@@ -41,6 +44,7 @@ class TenantViewModel(application: Application) : AndroidViewModel(application) 
         val cleanPhone = phone.trim()
         val cleanRent = rent.trim()
 
+    //Extra  Validation
         if (cleanName.isEmpty() || cleanPhone.isEmpty() || cleanRent.isEmpty()) {
             return null
         }
